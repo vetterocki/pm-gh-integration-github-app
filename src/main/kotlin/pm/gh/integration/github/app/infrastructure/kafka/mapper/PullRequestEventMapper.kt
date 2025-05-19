@@ -1,19 +1,17 @@
-package pm.gh.integration.github.app.infrastructure.kafka.mapper
+package pm.gh.integration.github.app.application.mapper
 
 import org.kohsuke.github.GHPullRequest
+import pm.gh.integration.github.app.common.TitleComposition
 import pm.gh.integration.github.app.domain.pull_request.PullRequestOpenedEvent
-import pm.gh.integration.github.app.domain.pull_request.TitleComposition
 
 object PullRequestEventMapper {
     fun GHPullRequest.toKafkaEvent(titleComposition: TitleComposition): PullRequestOpenedEvent {
-        return pullRequest.run {
-            PullRequestOpenedEvent(
-                pullRequestBody = body.orEmpty(),
-                actor = user.name,
-                pullRequestNumber = number.toString(),
-                htmlUrl = htmlUrl.toString(),
-                titleComposition = titleComposition
-            )
-        }
+        return PullRequestOpenedEvent.newBuilder().also {
+            it.pullRequestBody = body.orEmpty()
+            it.actor = user.name
+            it.pullRequestNumber = number.toString()
+            it.htmlUrl = htmlUrl.toString()
+            it.titleComposition = titleComposition
+        }.build()
     }
 }
