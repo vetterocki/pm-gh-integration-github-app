@@ -1,13 +1,29 @@
-package pm.gh.integration.github.app.application.mapper
+package pm.gh.integration.github.app.infrastructure.kafka.mapper
 
-import pm.gh.integration.github.app.common.TitleComposition
-import pm.gh.integration.github.app.domain.pull_request.UpdateTicketStatusEvent
+import org.kohsuke.github.GHPullRequest
+import org.kohsuke.github.GHWorkflowRun
+import pm.gh.integration.github.app.application.mapper.TItleCompositionMapper.toProto
+import pm.gh.integration.github.app.domain.pull_request.TitleComposition
+import pm.gh.integration.github.app.input.UpdateTicketStatusEvent
 
-object UpdateTicketStatusMapper {
-    fun TitleComposition.toKafkaEvent(status: String): UpdateTicketStatusEvent {
+object UpdateTicketStatusEventMapper {
+    fun GHPullRequest.toUpdateTicketStatusEvent(
+        ticketStatus: String,
+        titleComposition: TitleComposition,
+    ): UpdateTicketStatusEvent {
         return UpdateTicketStatusEvent.newBuilder().also {
-            it.status = status
-            it.titleComposition = this
+            it.status = ticketStatus
+            it.titleComposition = titleComposition.toProto()
+        }.build()
+    }
+
+    fun GHWorkflowRun.toUpdateTicketStatusEvent(
+        ticketStatus: String,
+        titleComposition: TitleComposition,
+    ): UpdateTicketStatusEvent {
+        return UpdateTicketStatusEvent.newBuilder().also {
+            it.status = ticketStatus
+            it.titleComposition = titleComposition.toProto()
         }.build()
     }
 }

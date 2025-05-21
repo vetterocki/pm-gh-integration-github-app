@@ -10,4 +10,6 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="pm-gh-integration-github-app"
+
+rootProject.name = "pm-gh-integration-github-app"
+include("_internal-api")

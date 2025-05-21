@@ -4,8 +4,8 @@ import jakarta.inject.Singleton
 import org.kohsuke.github.GHEventPayload.WorkflowRun
 import org.kohsuke.github.GHWorkflowRun.Status.COMPLETED
 import pm.gh.integration.github.app.infrastructure.kafka.handlers.WorkflowRunCompletedEventKafkaPublisher
-import pm.gh.integration.github.app.infrastructure.kafka.mapper.WorkflowRunEventMapper.toKafkaEvent
-import pm.gh.integration.github.app.service.TitleCompositionService
+import pm.gh.integration.github.app.infrastructure.kafka.mapper.WorkflowRunEventMapper.toWorkflowRunCompletedEvent
+import pm.gh.integration.github.app.application.service.TitleCompositionService
 import io.quarkiverse.githubapp.event.WorkflowRun.Completed as OnWorkflowRunCompleted
 
 @Singleton
@@ -20,7 +20,7 @@ class WorkflowRunCompletedHandler(
         return ghEventPayload.let {
             it.workflowRun.let { workflowRun ->
                 val titleComposition = titleCompositionService.extractProjectKeyAndTitle(workflowRun.displayTitle)
-                it.toKafkaEvent(titleComposition).also { kafkaEvent ->
+                it.toWorkflowRunCompletedEvent(titleComposition).also { kafkaEvent ->
                     workflowRunCompletedEventKafkaPublisher.publishEvent(kafkaEvent)
                 }
             }

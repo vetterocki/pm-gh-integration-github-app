@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pm.gh.integration.github.app.input;
+
+import "pm/gh/integration/github/app/common/title_composition.proto";
+
+option java_multiple_files = true;
+
+message UpdateTicketGithubDescriptionEvent {
+  string description = 1;
+  common.TitleComposition title_composition = 2;
+}
+
+

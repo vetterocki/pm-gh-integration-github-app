@@ -1,4 +1,4 @@
-package pm.gh.integration.github.app.service
+package pm.gh.integration.github.app.application.service
 
 import jakarta.enterprise.context.ApplicationScoped
 import pm.gh.integration.github.app.domain.pull_request.TitleComposition
@@ -11,11 +11,11 @@ class TitleCompositionService {
         val match = regex.find(title.trim())
 
         return match?.let {
-            val (projectKey, ticketId, summary) = it.destructured
+            val (projectKey, ticketId) = it.destructured
             TitleComposition(
                 projectKey = projectKey.uppercase(),
                 ticketIdentifier = "$projectKey-$ticketId".uppercase(),
-                ticketSummary = summary.trim()
+                ticketSummary = title.trim()
             )
         } ?: TitleComposition(
             projectKey = null,

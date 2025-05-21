@@ -6,24 +6,24 @@ import org.eclipse.microprofile.reactive.messaging.Channel
 import org.eclipse.microprofile.reactive.messaging.Emitter
 import org.slf4j.LoggerFactory
 import pm.gh.integration.github.app.KafkaTopic
-import pm.gh.integration.github.app.output.WorkflowRunCompletedEvent
+import pm.gh.integration.github.app.input.UpdateTicketGithubDescriptionEvent
 
 @Singleton
-class WorkflowRunCompletedEventKafkaPublisher(
-    @Channel(KafkaTopic.WorkflowRun.COMPLETED_CHANNEL)
+class UpdateTicketGithubDescriptionEventKafkaPublisher(
+    @Channel(KafkaTopic.TicketGithubDescription.UPDATE_CHANNEL)
     val emitter: Emitter<Record<String, ByteArray>>,
-) : KafkaPublisher<WorkflowRunCompletedEvent> {
+) : KafkaPublisher<UpdateTicketGithubDescriptionEvent> {
 
-    override fun publishEvent(domainEvent: WorkflowRunCompletedEvent) {
+    override fun publishEvent(domainEvent: UpdateTicketGithubDescriptionEvent) {
         logger.info(
-            "Publishing workflow_run.completed event with payload: \n{}to topic {}",
+            "Publishing ticket_github_description.update event with with payload: \n{}to topic {}",
             domainEvent,
-            KafkaTopic.WorkflowRun.COMPLETED_TOPIC
+            KafkaTopic.TicketGithubDescription.UPDATE_TOPIC
         )
         emitter.send(Record.of(domainEvent.titleComposition.ticketIdentifier, domainEvent.toByteArray()))
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(WorkflowRunCompletedEventKafkaPublisher::class.java)
+        private val logger = LoggerFactory.getLogger(UpdateTicketGithubDescriptionEventKafkaPublisher::class.java)
     }
 }
