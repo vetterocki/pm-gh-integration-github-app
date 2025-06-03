@@ -24,6 +24,6 @@ class WaitingForReviewStatusOnReadyLabelHandler(
     override fun onEvent(@OnPullRequestLabeled eventPayload: PullRequest) = handleEvent(eventPayload)
 
     companion object {
-        const val WAITING_FOR_REVIEW: String = "WAITING_FOR_REVIEW"
+        const val WAITING_FOR_REVIEW: String = "WAITING FOR REVIEW"
     }
 }

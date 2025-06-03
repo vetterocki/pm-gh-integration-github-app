@@ -24,6 +24,6 @@ class InProgressStatusOnPullRequestOpenedHandler(
     override fun onEvent(@OnPullRequestOpened eventPayload: PullRequest) = handleEvent(eventPayload)
 
     companion object {
-        const val IN_PROGRESS: String = "IN_PROGRESS"
+        const val IN_PROGRESS: String = "IN PROGRESS"
     }
 }

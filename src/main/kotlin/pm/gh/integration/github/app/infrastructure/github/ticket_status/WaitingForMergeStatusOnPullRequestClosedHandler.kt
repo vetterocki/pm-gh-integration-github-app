@@ -25,6 +25,6 @@ class WaitingForMergeStatusOnPullRequestClosedHandler(
     override fun onEvent(@OnPullRequestClosed eventPayload: PullRequest) = handleEvent(eventPayload)
 
     companion object {
-        const val WAITING_FOR_MERGE: String = "WAITING_FOR_MERGE"
+        const val WAITING_FOR_MERGE: String = "WAITING FOR MERGE"
     }
 }
